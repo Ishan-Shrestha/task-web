@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Your tasks!</h1>
+    <div class="task-display">
+        <ol class="task-list">
+            {% for k,v in data.items() %}
+                <li class="task"> <strong>Name:</strong> {{ v["task"] }} ,<strong>Priority:</strong> {{ v["priority"]}}</li>
+            {% endfor %}
+        </ol>
+    </div>
+</body>
+</html>
