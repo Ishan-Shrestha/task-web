@@ -4,6 +4,7 @@ A small python web app for task manager using FLASK:
 
 contains following commands for operation:
 - `load` at index/home
+- `add` at \add, uses requests to access the html itself and concepts regarding that.
 
 ### Features:
 - logging

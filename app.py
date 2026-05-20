@@ -1,4 +1,4 @@
-from flask import render_template, Flask
+from flask import render_template, Flask, redirect, request
 import logging
 import os
 import json
@@ -13,15 +13,15 @@ logging.basicConfig(
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
-# FLASK APP SET-UP
-
-app = Flask(__name__)
-
-# LOGIC OF PROGRAM
-
 # VARIABLES
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FILE_DIR = os.path.join(BASE_DIR, "tasks.json")
+
+
+# FLASK APP SET-UP
+app = Flask(__name__)
+
+# LOGIC OF PROGRAM
 
 def load_data():
     try:
@@ -37,6 +37,21 @@ def load_data():
 def home():
     data = load_data()
     return render_template('index.html', data = data)
+
+@app.route('/add/', methods=['POST'])
+def post_data():
+    data = load_data()
+    task = request.form.get('task', '').strip()
+    priority = request.form.get('priority', '').strip()
+    new_id = str(len(data) + 1)
+    data[new_id] = {
+        "task": task,
+        "priority": priority
+    }
+    with open(FILE_DIR, 'w') as file:
+        json.dump(data, file, indent=4)
+        
+    return redirect('/')
 
 if __name__ == '__main__':
     app.run(debug=True)

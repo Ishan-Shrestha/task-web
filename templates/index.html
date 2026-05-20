@@ -7,6 +7,19 @@
 </head>
 <body>
     <h1>Your tasks!</h1>
+
+    <form action="/add/" method="POST" id="form-input">
+        <input type="text" name="task" placeholder="Enter Your Task">
+        <label for="priority">Choose a priority:</label>
+        <select name="priority" id="priority">
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+        </select>
+            <button id="submit-button">submit</button>
+    </form>
+    
+
     <div class="task-display">
         <ol class="task-list">
             {% for k,v in data.items() %}
