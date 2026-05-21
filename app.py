@@ -33,6 +33,12 @@ def load_data():
         data = {}
     return data
 
+def store_data(data):
+    with open(FILE_DIR, 'w') as file:
+            json.dump(data, file, indent=4)
+    logger.info('Data is modified.')
+    return 'added successfully'
+
 @app.route('/')
 def home():
     data = load_data()
@@ -40,6 +46,7 @@ def home():
 
 @app.route('/add/', methods=['POST'])
 def post_data():
+    logger.info("Add operation called.")
     data = load_data()
     task = request.form.get('task', '').strip()
     priority = request.form.get('priority', '').strip()
@@ -48,9 +55,20 @@ def post_data():
         "task": task,
         "priority": priority
     }
-    with open(FILE_DIR, 'w') as file:
-        json.dump(data, file, indent=4)
+    store_data(data)
         
+    return redirect('/')
+
+@app.route('/done/<index>', methods=['POST'])
+def done_task(index):
+    logger.info("Done operation called.")
+    data = load_data()
+    if index in data:
+        logger.info("Removed task: [%s]", data[index])
+        del data[index]
+    data = {k+1:v for k,v in enumerate(data.values())}
+    store_data(data)
+
     return redirect('/')
 
 if __name__ == '__main__':
