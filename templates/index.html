@@ -1,36 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Your tasks!</h1>
+<body class="p-4">
 
-    <form action="/add/" method="POST" id="form-input">
-        <input type="text" name="task" placeholder="Enter Your Task">
-        <label for="priority">Choose a priority:</label>
-        <select name="priority" id="priority">
-            <option value="High">High</option>
-            <option value="Medium">Medium</option>
-            <option value="Low">Low</option>
-        </select>
-            <button id="submit-button">submit</button>
+    <h1 class="mb-4">Your tasks!</h1>
+
+    <form action="/add/" method="POST" id="form-input" class="mb-5">
+        <div class="form-group row mb-3 align-items-center">
+            <label for="task" class="col-sm-2 col-form-label">Task:</label>
+            <div class="col-sm-10">
+                <input type="text" name="task" placeholder="Enter Your Task" class="form-control" id="task">
+            </div>
+        </div>
+
+        <fieldset class="form-group mb-3">
+            <div class="row align-items-center">
+                <legend class="col-form-label col-sm-2 pt-0">Priority:</legend>
+                <div class="col-sm-10">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="priority" id="High" value="High" checked>
+                        <label class="form-check-label" for="High">High</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="priority" id="Medium" value="Medium">
+                        <label class="form-check-label" for="Medium">Medium</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="priority" id="Low" value="Low">
+                        <label class="form-check-label" for="Low">Low</label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="form-group row">
+            <div class="col-sm-10 offset-sm-2">
+                <button class="btn btn-success" id="submit-button">Submit</button>
+            </div>
+        </div>
     </form>
 
-        <ol class="task-list">
-            {% for index,value in data.items() %}
-                <li class="task"> 
-                    <strong>Name:</strong> {{ value["task"] }} ,
-                    <strong>Priority:</strong> {{ value["priority"]}} 
-                    <a href="/edit/{{index}}">Edit?</a>
-                    <form action="/done/{{index}}" method="POST">
-                        <button>Done?</button>
-                    </form>
-                </li>   
-            {% endfor %}
-        </ol>
+    <div class="table-responsive">
+        <table class="table table-sm table-striped table-hover table-bordered align-middle" style="--bs-border-color: #444;">
+            <thead>
+                <tr>
+                    <th scope="col" style="width: 10%">#</th>
+                    <th scope="col" style="width: 50%">Task Name</th>
+                    <th scope="col" style="width: 20%">Priority</th>
+                    <th scope="col" style="width: 20%" class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for index, value in data.items() %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ value["task"] }}</td>
+                    <td>
+                        {% if value["priority"] == "High" %}
+                            <span class="badge bg-danger">High</span>
+                        {% elif value["priority"] == "Medium" %}
+                            <span class="badge bg-warning text-dark">Medium</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Low</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        <div class="d-flex justify-content-center gap-2">
+                            <a class="btn btn-warning btn-sm" href="/edit/{{index}}">Edit</a>
+                            <form action="/done/{{index}}" method="POST" class="m-0">
+                                <button class="btn btn-danger btn-sm">Done</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>   
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
 
 </body>
 </html>
