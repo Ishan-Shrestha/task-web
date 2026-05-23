@@ -6,6 +6,7 @@ contains following routes:
 - `load` at index/home
 - `add` at \add, uses requests to access the html itself and concepts regarding that.
 - `done` basically used to mark the done works, will remove and renumerate the index.
+- `edit` redirct to another page to edit task
 
 ### Features:
 - logging

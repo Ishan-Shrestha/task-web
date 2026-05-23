@@ -71,5 +71,18 @@ def done_task(index):
 
     return redirect('/')
 
+@app.route('/edit/<index>', methods=['GET', 'POST'])
+def edit_task(index):
+    logger.info("Edit operation called.")
+    data = load_data()
+    current_task = data[index]
+    if request.method == 'POST':
+        data[index]['task'] = request.form.get('task','').strip()
+        data[index]['priority']= request.form.get('priority', '').strip()
+        store_data(data)
+        return redirect('/')
+
+    return render_template('edit.html', current_task = current_task, index=index)
+
 if __name__ == '__main__':
     app.run(debug=True)

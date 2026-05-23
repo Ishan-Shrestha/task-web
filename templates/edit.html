@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Section</title>
+</head>
+<body>
+    <form method="post" action="/edit/{{index}}">
+        <input type="text" name="task" placeholder="Enter Your Task" value="{{current_task.task}}">
+        <label for="priority">Choose a priority:</label>
+        <select name="priority" id="priority" >
+            <option value="High" {% if current_task.priority == 'High' %} selected {% endif %}>High</option>
+            <option value="Medium" {% if current_task.priority == 'Medium' %} selected {% endif %}>Medium</option>
+            <option value="Low" {% if current_task.priority == 'Low' %} selected {% endif %}>Low</option>
+        </select>
+            <button id="submit-button" type="submit">submit</button>
+    </form>
+</body>
+</html>

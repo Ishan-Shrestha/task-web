@@ -24,6 +24,7 @@
                 <li class="task"> 
                     <strong>Name:</strong> {{ value["task"] }} ,
                     <strong>Priority:</strong> {{ value["priority"]}} 
+                    <a href="/edit/{{index}}">Edit?</a>
                     <form action="/done/{{index}}" method="POST">
                         <button>Done?</button>
                     </form>
