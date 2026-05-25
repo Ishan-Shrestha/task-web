@@ -13,12 +13,13 @@ Themed by using bootstrap
 ### Features:
 - logging
 - Task Manager with priority indicator
+- Database using sqlite
 
 ### libararies used:
 - flask
 - logging
 - os
-- json
+- flask_sqlalchemy
 
 ### To use:
 - Install dependencies:

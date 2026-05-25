@@ -10,7 +10,7 @@
 
     <h1 class="mb-4">Your tasks!</h1>
 
-    <form action="/add/" method="POST" id="form-input" class="mb-5">
+    <form action="/add" method="POST" id="form-input" class="mb-5">
         <div class="form-group row mb-3 align-items-center">
             <label for="task" class="col-sm-2 col-form-label">Task:</label>
             <div class="col-sm-10">
@@ -40,7 +40,7 @@
 
         <div class="form-group row">
             <div class="col-sm-10 offset-sm-2">
-                <button class="btn btn-success" id="submit-button">Submit</button>
+                <button type="submit" class="btn btn-success" id="submit-button">Submit</button>
             </div>
         </div>
     </form>
@@ -56,14 +56,14 @@
                 </tr>
             </thead>
             <tbody>
-                {% for index, value in data.items() %}
+                {% for task in data %}
                 <tr>
-                    <th scope="row">{{ loop.index }}</th>
-                    <td>{{ value["task"] }}</td>
+                    <th scope="row">{{ task.id }}</th>
+                    <td>{{ task.task }}</td>
                     <td>
-                        {% if value["priority"] == "High" %}
+                        {% if task.priority == "High" %}
                             <span class="badge bg-danger">High</span>
-                        {% elif value["priority"] == "Medium" %}
+                        {% elif task.priority == "Medium" %}
                             <span class="badge bg-warning text-dark">Medium</span>
                         {% else %}
                             <span class="badge bg-secondary">Low</span>
@@ -71,13 +71,17 @@
                     </td>
                     <td class="text-center">
                         <div class="d-flex justify-content-center gap-2">
-                            <a class="btn btn-warning btn-sm" href="/edit/{{index}}">Edit</a>
-                            <form action="/done/{{index}}" method="POST" class="m-0">
-                                <button class="btn btn-danger btn-sm">Done</button>
+                            <a class="btn btn-warning btn-sm" href="/edit/{{task.id}}">Edit</a>
+                            <form action="/done/{{task.id}}" method="POST" class="m-0">
+                                <button type="submit" class="btn btn-danger btn-sm">Done</button>
                             </form>
                         </div>
                     </td>
                 </tr>   
+                 {% else %}
+                <tr>
+                    <td colspan="4" class="text-center text-muted py-3">No tasks found! Add one above.</td>
+                </tr>
                 {% endfor %}
             </tbody>
         </table>
