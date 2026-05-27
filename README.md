@@ -9,6 +9,7 @@ contains following routes:
 - `edit` redirct to another page to edit task  
 
 Themed by using bootstrap
+Implemented login system to personalize the task manager for individual users.
 
 ### Features:
 - logging
